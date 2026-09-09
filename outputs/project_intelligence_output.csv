@@ -1,0 +1,61 @@
+project_name,contractor,month,SPI,CPI,predicted_high_delay_probability,delay_risk_flag,schedule_flag,cost_flag,recommended_action
+Administrative Complex,Contractor B,2025-01-01,0.8640815936388034,0.8224794538040988,,Low / Not Scored,Critical,Critical,Review schedule recovery plan; Investigate cost overrun drivers
+Educational Campus,Contractor C,2025-01-01,1.1239108239884499,1.1134230703955685,,Low / Not Scored,On / Ahead,Efficient / On Plan,Continue routine project controls monitoring
+Food & Commercial Facility,Contractor A,2025-01-01,1.3263397554804788,1.2054670592476915,,Low / Not Scored,On / Ahead,Efficient / On Plan,Continue routine project controls monitoring
+Healthcare Facility,Contractor A,2025-01-01,0.9286417849456399,0.8826698116166107,,Low / Not Scored,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Road Development,Contractor B,2025-01-01,0.7015376772287092,0.6692917161983702,,Low / Not Scored,Critical,Critical,Review schedule recovery plan; Investigate cost overrun drivers
+Administrative Complex,Contractor B,2025-02-01,0.8255176688867701,0.7829021799570551,,Low / Not Scored,Critical,Critical,Review schedule recovery plan; Investigate cost overrun drivers
+Educational Campus,Contractor C,2025-02-01,1.0693639198414073,1.0600360760571974,,Low / Not Scored,On / Ahead,Efficient / On Plan,Continue routine project controls monitoring
+Food & Commercial Facility,Contractor A,2025-02-01,1.057954937544717,0.9431837149465304,,Low / Not Scored,On / Ahead,Cost Pressure,Monitor cost efficiency
+Healthcare Facility,Contractor A,2025-02-01,0.9958111217477744,0.9088506477302501,,Low / Not Scored,Behind Plan,Cost Pressure,Monitor schedule variance; Monitor cost efficiency
+Road Development,Contractor B,2025-02-01,1.1097811305224183,1.1037630173178448,,Low / Not Scored,On / Ahead,Efficient / On Plan,Continue routine project controls monitoring
+Administrative Complex,Contractor B,2025-03-01,0.9383238131155344,0.8963016149876242,,Low / Not Scored,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Educational Campus,Contractor C,2025-03-01,1.1597493518461137,1.1466052358276317,,Low / Not Scored,On / Ahead,Efficient / On Plan,Continue routine project controls monitoring
+Food & Commercial Facility,Contractor A,2025-03-01,0.988227063117393,0.9058662870533475,,Low / Not Scored,Behind Plan,Cost Pressure,Monitor schedule variance; Monitor cost efficiency
+Healthcare Facility,Contractor A,2025-03-01,0.947910447275033,0.8810684540833211,,Low / Not Scored,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Road Development,Contractor B,2025-03-01,0.9840172452253377,0.9606549515814343,,Low / Not Scored,Behind Plan,Cost Pressure,Monitor schedule variance; Monitor cost efficiency
+Administrative Complex,Contractor B,2025-04-01,0.9321013046061457,0.9090442631612327,,Low / Not Scored,Behind Plan,Cost Pressure,Monitor schedule variance; Monitor cost efficiency
+Educational Campus,Contractor C,2025-04-01,1.0474880855086917,1.0391607369839633,,Low / Not Scored,On / Ahead,Efficient / On Plan,Continue routine project controls monitoring
+Food & Commercial Facility,Contractor A,2025-04-01,0.9401139813166668,0.8515615527083858,,Low / Not Scored,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Healthcare Facility,Contractor A,2025-04-01,0.9000321919074726,0.8318317087061874,,Low / Not Scored,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Road Development,Contractor B,2025-04-01,1.0323950166498976,1.0259832782505036,,Low / Not Scored,On / Ahead,Efficient / On Plan,Continue routine project controls monitoring
+Administrative Complex,Contractor B,2025-05-01,0.8360191936973261,0.7851828812319325,,Low / Not Scored,Critical,Critical,Review schedule recovery plan; Investigate cost overrun drivers
+Educational Campus,Contractor C,2025-05-01,1.0291649835878194,1.0002050714515267,,Low / Not Scored,On / Ahead,Efficient / On Plan,Continue routine project controls monitoring
+Food & Commercial Facility,Contractor A,2025-05-01,0.9136172561217847,0.8201821396426399,,Low / Not Scored,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Healthcare Facility,Contractor A,2025-05-01,0.9391153916797683,0.8897274413634554,,Low / Not Scored,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Road Development,Contractor B,2025-05-01,1.031068323131763,1.005379608618656,,Low / Not Scored,On / Ahead,Efficient / On Plan,Continue routine project controls monitoring
+Administrative Complex,Contractor B,2025-06-01,0.9323831837459704,0.9050467744124558,,Low / Not Scored,Behind Plan,Cost Pressure,Monitor schedule variance; Monitor cost efficiency
+Educational Campus,Contractor C,2025-06-01,1.0440424302872464,1.0225798336170904,,Low / Not Scored,On / Ahead,Efficient / On Plan,Continue routine project controls monitoring
+Food & Commercial Facility,Contractor A,2025-06-01,0.9318288101262053,0.8245753242573345,,Low / Not Scored,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Healthcare Facility,Contractor A,2025-06-01,0.9341130407053996,0.8737728201737407,,Low / Not Scored,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Road Development,Contractor B,2025-06-01,0.9844034648294753,0.980688154298498,,Low / Not Scored,Behind Plan,Cost Pressure,Monitor schedule variance; Monitor cost efficiency
+Administrative Complex,Contractor B,2025-07-01,0.9257888216496094,0.880115952788153,,Low / Not Scored,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Educational Campus,Contractor C,2025-07-01,1.056128429567645,1.058056234193606,,Low / Not Scored,On / Ahead,Efficient / On Plan,Continue routine project controls monitoring
+Food & Commercial Facility,Contractor A,2025-07-01,0.904253059110591,0.8172542395099875,,Low / Not Scored,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Healthcare Facility,Contractor A,2025-07-01,0.9765486924559366,0.9003870127614749,,Low / Not Scored,Behind Plan,Cost Pressure,Monitor schedule variance; Monitor cost efficiency
+Road Development,Contractor B,2025-07-01,1.0105755994882257,0.9982795652010779,,Low / Not Scored,On / Ahead,Cost Pressure,Monitor cost efficiency
+Administrative Complex,Contractor B,2025-08-01,0.9044214809117971,0.8645472497744368,,Low / Not Scored,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Educational Campus,Contractor C,2025-08-01,1.0187898890903133,1.0107637173646045,,Low / Not Scored,On / Ahead,Efficient / On Plan,Continue routine project controls monitoring
+Food & Commercial Facility,Contractor A,2025-08-01,0.8934593969468957,0.8039685447322173,,Low / Not Scored,Critical,Critical,Review schedule recovery plan; Investigate cost overrun drivers
+Healthcare Facility,Contractor A,2025-08-01,0.9404322459524087,0.8701694853370097,,Low / Not Scored,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Road Development,Contractor B,2025-08-01,1.024652669776399,1.0015071873307553,,Low / Not Scored,On / Ahead,Efficient / On Plan,Continue routine project controls monitoring
+Administrative Complex,Contractor B,2025-09-01,0.8927615412849188,0.8616309574277526,0.5633378213473703,Medium,Critical,Critical,Review schedule recovery plan; Investigate cost overrun drivers
+Educational Campus,Contractor C,2025-09-01,1.04119376398639,1.0364747749328587,0.22366395507099085,Low / Not Scored,On / Ahead,Efficient / On Plan,Continue routine project controls monitoring
+Food & Commercial Facility,Contractor A,2025-09-01,0.8978000531802852,0.8103904550771318,0.586005773491762,Medium,Critical,Critical,Review schedule recovery plan; Investigate cost overrun drivers
+Healthcare Facility,Contractor A,2025-09-01,0.9262545363640368,0.8594459997627071,0.6290605852827615,Medium,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Road Development,Contractor B,2025-09-01,1.015929397125937,0.9897269266191743,0.5575532474718227,Medium,On / Ahead,Cost Pressure,Monitor cost efficiency
+Administrative Complex,Contractor B,2025-10-01,0.896626654376869,0.8629426648446212,0.6049021149725197,Medium,Critical,Critical,Review schedule recovery plan; Investigate cost overrun drivers
+Educational Campus,Contractor C,2025-10-01,1.035555476885606,1.0185491495244243,0.3713091266070435,Low / Not Scored,On / Ahead,Efficient / On Plan,Continue routine project controls monitoring
+Food & Commercial Facility,Contractor A,2025-10-01,0.9204347943566181,0.8408951595490066,0.608957911067649,Medium,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Healthcare Facility,Contractor A,2025-10-01,0.94850305357392,0.875348960391292,0.6390543803829287,Medium,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Road Development,Contractor B,2025-10-01,0.9981305869458796,0.9796929236847775,0.5156284999067552,Medium,Behind Plan,Cost Pressure,Monitor schedule variance; Monitor cost efficiency
+Administrative Complex,Contractor B,2025-11-01,0.9026508168163807,0.8601120790720558,0.6206427107249604,Medium,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Educational Campus,Contractor C,2025-11-01,1.0068664185516447,0.98900653862101,0.28458836922695085,Low / Not Scored,On / Ahead,Cost Pressure,Monitor cost efficiency
+Food & Commercial Facility,Contractor A,2025-11-01,0.9214987769194454,0.8392168831977996,0.6825560000653592,Medium,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Healthcare Facility,Contractor A,2025-11-01,0.9525626711447608,0.8788669552136287,0.600472397733659,Medium,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Road Development,Contractor B,2025-11-01,1.0013334297081464,0.9773859734254723,0.4801170666096088,Low / Not Scored,On / Ahead,Cost Pressure,Monitor cost efficiency
+Administrative Complex,Contractor B,2025-12-01,0.9059435631723207,0.8781467073132226,,Low / Not Scored,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Educational Campus,Contractor C,2025-12-01,1.0,0.9763755654928555,,Low / Not Scored,On / Ahead,Cost Pressure,Monitor cost efficiency
+Food & Commercial Facility,Contractor A,2025-12-01,0.9315280209456389,0.8472713741244715,,Low / Not Scored,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Healthcare Facility,Contractor A,2025-12-01,0.9567991122754027,0.8844370991027343,,Low / Not Scored,Behind Plan,Critical,Monitor schedule variance; Investigate cost overrun drivers
+Road Development,Contractor B,2025-12-01,1.0,0.9903416109455737,,Low / Not Scored,On / Ahead,Cost Pressure,Monitor cost efficiency
