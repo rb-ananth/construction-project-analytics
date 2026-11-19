@@ -1,0 +1,33 @@
+column,definition,data_type,availability
+project_id,Project identifier,Categorical,Observable
+project_name,Project display name,Categorical,Observable
+contractor,Assigned synthetic contractor,Categorical,Observable
+work_category,Work package / discipline,Categorical,Observable
+month,Monthly reporting period,Date,Observable
+month_index,Sequential month number,Numeric,Observable
+contract_value_cr,"Project contract value, ₹ crore",Numeric,Observable
+package_budget_cr,"Work-package budget, ₹ crore",Numeric,Observable
+baseline_start_month,Approved baseline start month index,Numeric,Known baseline
+baseline_duration_months,Approved baseline duration,Numeric,Known baseline
+planned_progress_increment_pct,Planned progress in the current month,Numeric,Known baseline
+planned_progress_pct,Cumulative planned progress,Numeric,Known baseline
+actual_progress_increment_pct,Actual progress achieved in current month,Numeric,Observed outcome
+actual_progress_pct,Cumulative actual physical progress,Numeric,Observed outcome
+planned_cost_month_cr,"Planned current-month expenditure, ₹ crore",Numeric,Known baseline
+actual_cost_month_cr,"Actual current-month expenditure, ₹ crore",Numeric,Observed outcome
+cumulative_actual_cost_cr,"Cumulative actual expenditure, ₹ crore",Numeric,Observed outcome
+delay_days,Recorded delay days in current reporting month,Numeric,Observed outcome
+labour_shortage_pct,Estimated labour shortage percentage,Numeric,Observed driver
+procurement_delay_days,Procurement-related delay days,Numeric,Observed driver
+design_change_count,Count of design changes recorded in month,Numeric,Observed driver
+material_price_index,Synthetic material-price index,Numeric,Observed driver
+rainfall_mm,"Synthetic monthly rainfall, millimetres",Numeric,Observed driver
+risk_state_simulated,Latent project risk state used by simulator,Numeric,SIMULATOR ONLY — EXCLUDE
+productivity_factor_simulated,Latent productivity multiplier used by simulator,Numeric,SIMULATOR ONLY — EXCLUDE
+PV_cr,"Cumulative planned value, ₹ crore",Numeric,Derived EVM
+EV_cr,"Cumulative earned value, ₹ crore",Numeric,Derived EVM
+AC_cr,"Cumulative actual cost, ₹ crore",Numeric,Derived EVM
+SV_cr,"Schedule variance = EV − PV, ₹ crore",Numeric,Derived EVM
+CV_cr,"Cost variance = EV − AC, ₹ crore",Numeric,Derived EVM
+SPI,Schedule performance index = EV / PV,Numeric,Derived EVM
+CPI,Cost performance index = EV / AC,Numeric,Derived EVM
