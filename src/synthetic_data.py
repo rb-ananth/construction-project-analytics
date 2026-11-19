@@ -215,71 +215,251 @@ def generate_construction_dataset(
     return data
 
 
+
 def validate_construction_dataset(data: pd.DataFrame) -> dict:
-    """Run structural and domain checks; return a compact quality report."""
+    """Run structural, temporal, financial and EVM data-quality checks."""
+
     required = {
-        "project_id", "project_name", "contractor", "work_category", "month", "month_index",
+        "project_id", "project_name", "contractor", "work_category",
+        "month", "month_index",
+        "contract_value_cr", "package_budget_cr",
         "planned_progress_pct", "actual_progress_pct",
         "planned_progress_increment_pct", "actual_progress_increment_pct",
         "planned_cost_month_cr", "actual_cost_month_cr",
-        "cumulative_actual_cost_cr", "delay_days", "PV_cr", "EV_cr", "AC_cr",
+        "cumulative_actual_cost_cr", "delay_days",
+        "PV_cr", "EV_cr", "AC_cr", "SV_cr", "CV_cr", "SPI", "CPI",
     }
+
     missing_columns = sorted(required - set(data.columns))
     if missing_columns:
         raise ValueError(f"Missing required columns: {missing_columns}")
 
-    key = ["project_id", "work_category", "month"]
-    duplicate_grain = int(data.duplicated(key).sum())
-    grouped = data.groupby(["project_id", "work_category"], sort=False)
+    # Work on a copy and establish chronological order.
+    ordered = data.copy()
+    ordered["_month"] = pd.to_datetime(ordered["month"], errors="coerce")
+
+    invalid_months = int(ordered["_month"].isna().sum())
+
+    ordered = ordered.sort_values(
+        ["project_id", "work_category", "_month"]
+    ).reset_index(drop=True)
+
+    key = ["project_id", "work_category", "_month"]
+    duplicate_grain = int(ordered.duplicated(key).sum())
+
+    grouped = ordered.groupby(
+        ["project_id", "work_category"], sort=False
+    )
+
+    # Cumulative progress and expenditure checks.
     actual_progress_diff = grouped["actual_progress_pct"].diff().dropna()
     planned_progress_diff = grouped["planned_progress_pct"].diff().dropna()
     cumulative_cost_diff = grouped["cumulative_actual_cost_cr"].diff().dropna()
-    missing_columns_with_values = set(data.columns[data.isna().any()].tolist())
-    unexpected_missing_columns = sorted(missing_columns_with_values - {"SPI", "CPI"})
 
-    # Reconcile each project's work-package budgets to its contract value.
-    package_budgets = data.drop_duplicates(["project_id", "work_category"])
-    budget_by_project = package_budgets.groupby("project_id")["package_budget_cr"].sum()
-    contract_by_project = package_budgets.groupby("project_id")["contract_value_cr"].first()
-    budget_reconciliation_error = float((budget_by_project - contract_by_project).abs().max())
+    expected_actual_progress = grouped[
+        "actual_progress_increment_pct"
+    ].cumsum()
 
-    # Reconcile cumulative cost to the running total of monthly expenditure.
-    expected_cumulative_cost = grouped["actual_cost_month_cr"].cumsum()
-    cumulative_cost_reconciliation_error = float(
-        (data["cumulative_actual_cost_cr"].to_numpy() - expected_cumulative_cost.to_numpy()).__abs__().max()
+    expected_planned_progress = grouped[
+        "planned_progress_increment_pct"
+    ].cumsum()
+
+    expected_cumulative_cost = grouped[
+        "actual_cost_month_cr"
+    ].cumsum()
+
+    def max_abs_error(actual, expected):
+        return float(
+            (actual.to_numpy() - expected.to_numpy()).__abs__().max()
+        )
+
+    cumulative_cost_error = max_abs_error(
+        ordered["cumulative_actual_cost_cr"],
+        expected_cumulative_cost
     )
 
+    actual_progress_reconciliation_error = max_abs_error(
+        ordered["actual_progress_pct"],
+        expected_actual_progress
+    )
+
+    planned_progress_reconciliation_error = max_abs_error(
+        ordered["planned_progress_pct"],
+        expected_planned_progress
+    )
+
+    # Reconcile package budgets against project contract values.
+    package_budgets = ordered.drop_duplicates(
+        ["project_id", "work_category"]
+    )
+
+    budget_by_project = package_budgets.groupby(
+        "project_id"
+    )["package_budget_cr"].sum()
+
+    contract_by_project = package_budgets.groupby(
+        "project_id"
+    )["contract_value_cr"].first()
+
+    budget_reconciliation_error = float(
+        (budget_by_project - contract_by_project).abs().max()
+    )
+
+    # Validate EVM calculations.
+    expected_pv = (
+        ordered["package_budget_cr"]
+        * ordered["planned_progress_pct"] / 100
+    )
+
+    expected_ev = (
+        ordered["package_budget_cr"]
+        * ordered["actual_progress_pct"] / 100
+    )
+
+    expected_sv = ordered["EV_cr"] - ordered["PV_cr"]
+    expected_cv = ordered["EV_cr"] - ordered["AC_cr"]
+
+    pv_error = max_abs_error(ordered["PV_cr"], expected_pv)
+    ev_error = max_abs_error(ordered["EV_cr"], expected_ev)
+    sv_error = max_abs_error(ordered["SV_cr"], expected_sv)
+    cv_error = max_abs_error(ordered["CV_cr"], expected_cv)
+    ac_error = max_abs_error(
+        ordered["AC_cr"],
+        ordered["cumulative_actual_cost_cr"]
+    )
+
+    # Validate missing SPI/CPI values against zero denominators.
+    spi_missingness_errors = int(
+        (
+            np.isclose(ordered["PV_cr"], 0, atol=1e-12)
+            != ordered["SPI"].isna()
+        ).sum()
+    )
+
+    cpi_missingness_errors = int(
+        (
+            np.isclose(ordered["AC_cr"], 0, atol=1e-12)
+            != ordered["CPI"].isna()
+        ).sum()
+    )
+
+    missing_columns_with_values = set(
+        ordered.columns[ordered.isna().any()].tolist()
+    )
+
+    unexpected_missing_columns = sorted(
+        missing_columns_with_values - {"SPI", "CPI"}
+    )
+
+    # Detect non-finite numeric values, excluding expected NaN ratios.
+    numeric_columns = ordered.select_dtypes(include="number").columns
+    numeric_columns = [
+        col for col in numeric_columns if col not in {"SPI", "CPI"}
+    ]
+
+    non_finite_values = int(
+        (~np.isfinite(ordered[numeric_columns])).sum().sum()
+    )
+
+    # Collect validation results.
     checks = {
-        "rows": int(len(data)),
+        "rows": int(len(ordered)),
         "columns": int(data.shape[1]),
-        "projects": int(data["project_id"].nunique()),
-        "work_categories": int(data["work_category"].nunique()),
-        "reporting_months": int(data["month"].nunique()),
+        "projects": int(ordered["project_id"].nunique()),
+        "work_categories": int(ordered["work_category"].nunique()),
+        "reporting_months": int(ordered["month"].nunique()),
+
+        "invalid_month_rows": invalid_months,
         "duplicate_grain_rows": duplicate_grain,
-        "missing_cells": int(data.isna().sum().sum()),
-        "columns_with_expected_missing_values": ", ".join(sorted(missing_columns_with_values)),
-        "unexpected_missing_columns": ", ".join(unexpected_missing_columns),
-        "negative_monthly_cost_rows": int((data["actual_cost_month_cr"] < 0).sum()),
-        "negative_delay_rows": int((data["delay_days"] < 0).sum()),
-        "actual_progress_out_of_bounds_rows": int((~data["actual_progress_pct"].between(0, 100)).sum()),
-        "planned_progress_out_of_bounds_rows": int((~data["planned_progress_pct"].between(0, 100)).sum()),
-        "actual_progress_decreases": int((actual_progress_diff < -1e-9).sum()),
-        "planned_progress_decreases": int((planned_progress_diff < -1e-9).sum()),
-        "cumulative_cost_decreases": int((cumulative_cost_diff < -1e-9).sum()),
-        "max_project_budget_reconciliation_error_cr": budget_reconciliation_error,
-        "max_cumulative_cost_reconciliation_error_cr": cumulative_cost_reconciliation_error,
+        "missing_cells": int(ordered.isna().sum().sum()),
+        "columns_with_expected_missing_values": ", ".join(
+            sorted(missing_columns_with_values)
+        ),
+        "unexpected_missing_columns": ", ".join(
+            unexpected_missing_columns
+        ),
+        "non_finite_numeric_values": non_finite_values,
+
+        "negative_planned_monthly_cost_rows": int(
+            (ordered["planned_cost_month_cr"] < 0).sum()
+        ),
+        "negative_monthly_cost_rows": int(
+            (ordered["actual_cost_month_cr"] < 0).sum()
+        ),
+        "negative_delay_rows": int(
+            (ordered["delay_days"] < 0).sum()
+        ),
+
+        "negative_planned_progress_increment_rows": int(
+            (ordered["planned_progress_increment_pct"] < 0).sum()
+        ),
+        "negative_actual_progress_increment_rows": int(
+            (ordered["actual_progress_increment_pct"] < 0).sum()
+        ),
+
+        "actual_progress_out_of_bounds_rows": int(
+            (~ordered["actual_progress_pct"].between(0, 100)).sum()
+        ),
+        "planned_progress_out_of_bounds_rows": int(
+            (~ordered["planned_progress_pct"].between(0, 100)).sum()
+        ),
+
+        "actual_progress_decreases": int(
+            (actual_progress_diff < -1e-9).sum()
+        ),
+        "planned_progress_decreases": int(
+            (planned_progress_diff < -1e-9).sum()
+        ),
+        "cumulative_cost_decreases": int(
+            (cumulative_cost_diff < -1e-9).sum()
+        ),
+
+        "spi_missingness_errors": spi_missingness_errors,
+        "cpi_missingness_errors": cpi_missingness_errors,
+
+        "max_project_budget_reconciliation_error_cr":
+            budget_reconciliation_error,
+        "max_cumulative_cost_reconciliation_error_cr":
+            cumulative_cost_error,
+        "max_actual_progress_reconciliation_error_pct":
+            actual_progress_reconciliation_error,
+        "max_planned_progress_reconciliation_error_pct":
+            planned_progress_reconciliation_error,
+
+        "max_PV_reconciliation_error_cr": pv_error,
+        "max_EV_reconciliation_error_cr": ev_error,
+        "max_AC_reconciliation_error_cr": ac_error,
+        "max_SV_reconciliation_error_cr": sv_error,
+        "max_CV_reconciliation_error_cr": cv_error,
     }
+
+    # Overall pass/fail decision.
     checks["passed"] = bool(
-        checks["duplicate_grain_rows"] == 0
+        checks["invalid_month_rows"] == 0
+        and checks["duplicate_grain_rows"] == 0
         and checks["unexpected_missing_columns"] == ""
+        and checks["non_finite_numeric_values"] == 0
+        and checks["negative_planned_monthly_cost_rows"] == 0
         and checks["negative_monthly_cost_rows"] == 0
         and checks["negative_delay_rows"] == 0
+        and checks["negative_planned_progress_increment_rows"] == 0
+        and checks["negative_actual_progress_increment_rows"] == 0
         and checks["actual_progress_out_of_bounds_rows"] == 0
         and checks["planned_progress_out_of_bounds_rows"] == 0
         and checks["actual_progress_decreases"] == 0
         and checks["planned_progress_decreases"] == 0
         and checks["cumulative_cost_decreases"] == 0
+        and checks["spi_missingness_errors"] == 0
+        and checks["cpi_missingness_errors"] == 0
         and budget_reconciliation_error < 1e-8
-        and cumulative_cost_reconciliation_error < 1e-8
+        and cumulative_cost_error < 1e-8
+        and actual_progress_reconciliation_error < 1e-8
+        and planned_progress_reconciliation_error < 1e-8
+        and pv_error < 1e-8
+        and ev_error < 1e-8
+        and ac_error < 1e-8
+        and sv_error < 1e-8
+        and cv_error < 1e-8
     )
+
     return checks
