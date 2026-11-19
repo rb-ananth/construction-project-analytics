@@ -1,0 +1,4 @@
+split,rows,forecast_origin_start,forecast_origin_end,target_month_start,target_month_end,delay_positive_rate
+train,4500,2025-01-01,2026-03-01,2025-02-01,2026-04-01,0.3028888888888889
+validation,1200,2026-04-01,2026-07-01,2026-05-01,2026-08-01,0.33
+test,1200,2026-08-01,2026-11-01,2026-09-01,2026-12-01,0.38416666666666666

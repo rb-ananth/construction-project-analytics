@@ -1,0 +1,2 @@
+selected_model,validation_selected_threshold,investigation_capacity_share,test_forecast_origins,test_flagged_packages,test_selected_for_investigation,test_flagged_backlog,impact_score_status
+Random Forest,0.27999999999999997,0.3,1200,804,360,444,Heuristic proxy; not validated project impact

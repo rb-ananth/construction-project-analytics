@@ -1,0 +1,5 @@
+month,total_packages,flagged_packages,investigation_capacity,selected_for_investigation,flagged_share_pct,flagged_backlog
+2026-08-01,300,177,90,90,59.0,87
+2026-09-01,300,202,90,90,67.33333333333333,112
+2026-10-01,300,205,90,90,68.33333333333333,115
+2026-11-01,300,220,90,90,73.33333333333333,130

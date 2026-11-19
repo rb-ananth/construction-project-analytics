@@ -1,0 +1,3 @@
+task,selected_model,test_MAE,test_RMSE,test_R2,unit
+cost,Random Forest Regressor,0.0017779584980215479,0.006069591325185885,0.9918883337174434,₹ crore
+progress,Random Forest Regressor,0.05651229929128647,0.15270415189072403,0.9707078396628133,percentage points
