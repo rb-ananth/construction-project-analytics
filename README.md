@@ -441,6 +441,48 @@ The improvements are measured on the simulated held-out test set. They should no
 
 ---
 
+## Visual Results
+
+### 1. Project Cost and Progress Analysis
+
+Monthly expenditure patterns and sample project progress curves provide an overview of project execution behaviour.
+
+![Monthly expenditure](outputs_v2/visualizations/v2_01_monthly_expenditure.png)
+
+![Sample progress curve](outputs_v2/visualizations/v2_03_sample_progress_curve.png)
+
+### 2. Delay Risk Classification
+
+The confusion matrix illustrates validation classification performance. Permutation importance highlights the features contributing to delay-risk predictions.
+
+![Validation confusion matrix](outputs_v2/visualizations/v2_04_validation_confusion_matrix.png)
+
+![Delay permutation importance](outputs_v2/visualizations/v2_05_delay_permutation_importance.png)
+
+### 3. Cost and Progress Forecasting
+
+Actual-versus-predicted plots compare model forecasts with observed next-month outcomes.
+
+![Regression actual versus predicted](outputs_v2/visualizations/v2_06_regression_actual_vs_predicted.png)
+
+### 4. PMC Risk Prioritisation
+
+The risk prioritisation analysis demonstrates how predicted delay probabilities and impact proxies are translated into a capacity-constrained investigation shortlist.
+
+![PMC risk prioritisation](outputs_v2/visualizations/v2_07_pmc_risk_prioritisation_capacity.png)
+
+### Additional Model Diagnostics
+
+The following visualisations provide supporting evidence for model evaluation and diagnostic analysis.
+
+![Delay distribution](outputs_v2/visualizations/v2_02_delay_distribution.png)
+
+![Delay probability calibration](outputs_v2/visualizations/v2_06_delay_probability_calibration.png)
+
+![Regression residuals](outputs_v2/visualizations/v2_07_regression_residuals.png)
+
+---
+
 ## 10. Forecasting Data Diagnostics and Limitations
 
 The test dataset contains a high proportion of zero-activity observations.
